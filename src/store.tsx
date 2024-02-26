@@ -44,6 +44,6 @@ const storeCallback = (set: any) => ({
 export const useStore = create(
   persist(storeCallback, {
     name: "todo-storage",
-    storage: createJSONStorage(() => sessionStorage),
+    storage: createJSONStorage(() => localStorage),
   })
 );
