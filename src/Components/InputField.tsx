@@ -35,7 +35,6 @@ const InputField: React.FC<InputFieldProps> = ({
   }, [errors.title]);
 
   const onSubmit = ({ title }: TitleSchemaType) => {
-    console.log("\x1b[44m%s\x1b[0m", "InputField.tsx line:37 title", title);
     onActionExecute(title.trim());
     reset();
   };
