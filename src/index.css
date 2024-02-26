@@ -30,7 +30,7 @@ body {
   }
 }
 
-.element_with_animation {
+.error_with_animation {
   border: 2px solid transparent; /* Start with a transparent border */
   animation-name: borderAnimation;
   animation-duration: 3s; /* Duration of the animation */

@@ -15,7 +15,10 @@ const storeCallback = (set: any) => ({
   todos: [],
   add: (title: string) =>
     set((state: { todos: any }) => ({
-      todos: [...state.todos, { title: title, id: new Date().getTime() }],
+      todos: [
+        ...state.todos,
+        { title: title, id: new Date().getTime(), done: false },
+      ],
     })),
   toggleDone: (selectId: number) =>
     set((state: { todos: any[] }) => ({

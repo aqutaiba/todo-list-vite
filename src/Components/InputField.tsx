@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import toast from "react-hot-toast";
+import { TitleSchema, TitleSchemaType } from "../types";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { useForm } from "react-hook-form";
 
 const showErrorToast = (msg: string) =>
   toast.error(msg, {
@@ -19,36 +23,37 @@ const InputField: React.FC<InputFieldProps> = ({
   defaultValue = "",
   customSubmitStyle = "",
 }) => {
-  const [inputValue, setInputValue] = React.useState<string>(defaultValue);
-  const [hasError, setHasError] = React.useState<boolean>(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TitleSchemaType>({ resolver: zodResolver(TitleSchema) });
 
-  const onSubmit = () => {
-    if (inputValue.trim() && inputValue.trim().length >= 3) {
-      onActionExecute(inputValue.trim());
-      setInputValue("");
-      setHasError(false);
-    } else {
-      showErrorToast("Please enter a valid input (at least 3 characters).");
-      setHasError(true);
-    }
+  useEffect(() => {
+    if (!!errors?.title) showErrorToast(errors.title?.message || "");
+  }, [errors.title]);
+
+  const onSubmit = ({ title }: TitleSchemaType, e: any) => {
+    onActionExecute(title.trim());
+    e.target.reset();
   };
 
   return (
-    <div className="flex-1 justify-center">
+    <form className="flex-1 justify-center" onSubmit={handleSubmit(onSubmit)}>
       <input
         className={`w-1/2 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500 bg-inherit text-white ${
-          hasError && inputValue.trim().length < 3 && "element_with_animation"
+          Object.keys(errors).length !== 0 && "error_with_animation"
         }`}
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        type="text"
+        placeholder="title"
+        {...register("title", { value: defaultValue, required: true, min: 3 })}
       />
-      <button
+      <input
+        title={submitButtonText}
         className={`mx-3  bg-blue-500 hover:bg-blue-700 text-white py-2 px-5 rounded-lg ${customSubmitStyle}`}
-        onClick={onSubmit}
-      >
-        {submitButtonText}
-      </button>
-    </div>
+        type="submit"
+      />
+    </form>
   );
 };
 

@@ -46,7 +46,7 @@ export function TodoCard({ id, title, done }: TodoType) {
               onClick={handleToggleComplete}
             >
               <div className="flex w-23">
-                {done ? (
+                {!done ? (
                   <>
                     <IoRefresh className="mx-1" size={20} color={"ffffff"} />{" "}
                     mark unDone
