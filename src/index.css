@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #0e182a;
+}
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  margin-top: 10%;
+}
+
+.card_title {
+  max-width: 200px;
+  white-space: nowrap;
+  color: aliceblue;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@keyframes borderAnimation {
+  0% {
+    border-color: transparent;
+  }
+  35% {
+    border-color: "red";
+  }
+  100% {
+    border-color: #dc3545;
+  }
+}
+
+.element_with_animation {
+  border: 2px solid transparent; /* Start with a transparent border */
+  animation-name: borderAnimation;
+  animation-duration: 3s; /* Duration of the animation */
+  animation-fill-mode: forwards; /* Retain the final state of the animation */
+}
